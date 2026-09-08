@@ -23,23 +23,26 @@
 <script>
 const BRIDGE='http://Kobis-Mac-Studio.local:8765';
 function clearText(){document.getElementById('text').value='';document.getElementById('status').textContent='';}
+function cleanPath(value){
+  return value.trim().replace(/^["'“”‘’]+/, '').replace(/["'“”‘’.,;:)]}+$/, '');
+}
 async function pasteText(){
   const status=document.getElementById('status');
   try{
     const raw=await navigator.clipboard.readText();
-    const match=raw.match(/^\/Volumes\/[^\x0D\x0A]+/m);
+    const match=raw.match(/\/Volumes\/[^\x0D\x0A]+/);
     if(!match){
       document.getElementById('text').value='';
       status.textContent='לא מצאתי בהודעה נתיב שמתחיל ב־/Volumes/';
       return;
     }
-    document.getElementById('text').value=match[0].trim().replace(/[.,;:)]$/, '');
+    document.getElementById('text').value=cleanPath(match[0]);
     status.textContent='הנתיב חולץ מההודעה.';
   }catch(e){status.textContent='האייפון חסם גישה ל־Clipboard. ודא שהאתר פתוח בכתובת HTTPS.';}
 }
 function extractPath(){
-  const m=document.getElementById('text').value.match(/^\/Volumes\/[^\x0D\x0A]+/m);
-  return m ? m[0].trim().replace(/[.,;:)]$/, '') : '';
+  const m=document.getElementById('text').value.match(/\/Volumes\/[^\x0D\x0A]+/);
+  return m ? cleanPath(m[0]) : '';
 }
 function openOnMac(){
   const path=extractPath();
