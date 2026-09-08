@@ -14,8 +14,8 @@
 <h1>פתיחת נתיב במק</h1>
 <p>העתק הודעת WhatsApp שלמה, ואז לחץ על <b>הדבק</b>:</p>
 <textarea id="text" autofocus></textarea>
-<div class="tool-row"><button onclick="clearText()">נקה</button><button onclick="pasteText()">הדבק</button></div>
-<button onclick="openOnMac()">פתח במק</button>
+<div class="tool-row"><button type="button" id="clearBtn">נקה</button><button type="button" id="pasteBtn">הדבק</button></div>
+<button type="button" id="openBtn">פתח במק</button>
 <hr>
 <button onclick="openWhatsAppLatest()">פתח WhatsApp עם הנתיב האחרון מהמק</button>
 <div id="status"></div>
@@ -42,5 +42,8 @@ function openOnMac(){
   window.location.href=BRIDGE+'/open-web?text='+encodeURIComponent(path);
 }
 function openWhatsAppLatest(){window.location.href=BRIDGE+'/whatsapp-latest';}
+document.getElementById('clearBtn').addEventListener('click', clearText);
+document.getElementById('pasteBtn').addEventListener('click', pasteText);
+document.getElementById('openBtn').addEventListener('click', openOnMac);
 </script>
 </main></body></html>
