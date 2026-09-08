@@ -24,7 +24,7 @@
 const BRIDGE='http://Kobis-Mac-Studio.local:8765';
 function clearText(){document.getElementById('text').value='';document.getElementById('status').textContent='';}
 function cleanPath(value){
-  return value.trim().replace(/^["'“”‘’]+/, '').replace(/["'“”‘’.,;:)]}+$/, '');
+  return value.trim().replace(/^["'“”‘’]+/, '').replace(/["'“”‘’]+$/, '');
 }
 async function pasteText(){
   const status=document.getElementById('status');
