@@ -32,8 +32,7 @@ async function pasteText(){
   }catch(e){status.textContent='האייפון חסם גישה ל־Clipboard. ודא שהאתר פתוח בכתובת HTTPS.';}
 }
 function extractPath(){
-  const m=document.getElementById('text').value.match(/^\/Volumes\/[^
-]+/m);
+  const m=document.getElementById('text').value.match(/^\/Volumes\/[^\x0D\x0A]+/m);
   return m ? m[0].trim().replace(/[.,;:)]$/, '') : '';
 }
 function openOnMac(){
