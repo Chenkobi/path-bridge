@@ -26,9 +26,15 @@ function clearText(){document.getElementById('text').value='';document.getElemen
 async function pasteText(){
   const status=document.getElementById('status');
   try{
-    const text=await navigator.clipboard.readText();
-    document.getElementById('text').value=text;
-    status.textContent='הטקסט הודבק.';
+    const raw=await navigator.clipboard.readText();
+    const match=raw.match(/^\/Volumes\/[^\x0D\x0A]+/m);
+    if(!match){
+      document.getElementById('text').value='';
+      status.textContent='לא מצאתי בהודעה נתיב שמתחיל ב־/Volumes/';
+      return;
+    }
+    document.getElementById('text').value=match[0].trim().replace(/[.,;:)]$/, '');
+    status.textContent='הנתיב חולץ מההודעה.';
   }catch(e){status.textContent='האייפון חסם גישה ל־Clipboard. ודא שהאתר פתוח בכתובת HTTPS.';}
 }
 function extractPath(){
